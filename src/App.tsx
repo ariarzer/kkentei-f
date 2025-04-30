@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getKanji } from './services/api.ts';
 
 type Kanji = {
   id: number;
@@ -9,27 +10,9 @@ function App() {
   const [kanji, setKanji] = useState<Kanji[]>([]);
 
   useEffect(() => {
-    if (import.meta.env.MODE === 'development') {
-      fetch('http://localhost:3000', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`,
-        },
-      }).then(res => {
-        res.json().then(data => setKanji(data));
-      });
-    } else {
-      fetch('https://kkentei-b.onrender.com', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`,
-        },
-      }).then(res => {
-        res.json().then(data => setKanji(data));
-      });
-    }
+    getKanji().then(kanji => {
+      setKanji(kanji);
+    });
   }, []);
 
   return (
