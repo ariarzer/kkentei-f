@@ -1,26 +1,15 @@
-import { useEffect, useState } from 'react';
-import { getKanji } from './services/api.ts';
-
-type Kanji = {
-  id: number;
-  kanji: string;
-};
+import { Routes, Route } from 'react-router-dom';
+import Deck from './routes/Deck.tsx';
+import Main from './routes/Main.tsx';
 
 function App() {
-  const [kanji, setKanji] = useState<Kanji[]>([]);
-
-  useEffect(() => {
-    getKanji().then(kanji => {
-      setKanji(kanji);
-    });
-  }, []);
-
   return (
-    <div>
-      {kanji.map(item => {
-        return <span key={item.id}>{item.kanji}</span>;
-      })}
-    </div>
+    <main>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/deck" element={<Deck />} />
+      </Routes>
+    </main>
   );
 }
 
