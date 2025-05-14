@@ -41,3 +41,12 @@ export async function createUser(username: string, email: string, password: stri
   });
   return data.json();
 }
+
+export async function login(username: string, password: string) {
+  const data = await fetch(`${url}/login`, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify({ username, password }),
+  });
+  return data.json();
+}
